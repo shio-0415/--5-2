@@ -4,13 +4,22 @@ import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.m
 
 import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/loaders/GLTFLoader.js";
 
+// --------------------
 // canvas取得
+// --------------------
+
 const canvas = document.getElementById("canvas");
 
+// --------------------
 // シーン
+// --------------------
+
 const scene = new THREE.Scene();
 
+// --------------------
 // カメラ
+// --------------------
+
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
@@ -20,31 +29,39 @@ const camera = new THREE.PerspectiveCamera(
 
 camera.position.z = 5;
 
+// --------------------
 // レンダラー
+// --------------------
+
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas
 });
 
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(
+  window.innerWidth,
+  window.innerHeight
+);
 
 // --------------------
 // ライト
 // --------------------
 
-const light = new THREE.DirectionalLight(
-  0xffffff,
-  2
-);
+const light =
+  new THREE.DirectionalLight(
+    0xffffff,
+    2
+  );
 
 light.position.set(5, 5, 5);
 
 scene.add(light);
 
 // 環境光
-const light2 = new THREE.AmbientLight(
-  0xffffff,
-  0.3
-);
+const light2 =
+  new THREE.AmbientLight(
+    0xffffff,
+    0.3
+  );
 
 scene.add(light2);
 
@@ -152,16 +169,18 @@ function animate() {
 
   if (cube) {
 
-    cube.rotation.x += 0.01;
+    // 回転
+    cube.rotation.x += 0.03;
 
-    cube.rotation.y += 0.02;
+    cube.rotation.y += 0.05;
 
-    // 左側を移動
+    // 左右移動
     cube.position.x =
-      -1.5 + Math.sin(t) * 2;
+      -1.5 + Math.sin(t * 2) * 2;
 
+    // 上下移動
     cube.position.y =
-      Math.cos(t * 2) * 1.5;
+      Math.cos(t * 3) * 1.5;
 
   }
 
@@ -169,28 +188,47 @@ function animate() {
   // Sphere
   // --------------------
 
-  sphere.rotation.y += 0.03;
+  // 回転
+  sphere.rotation.y += 0.05;
 
-  // 右側を移動
+  // 左右移動
   sphere.position.x =
-    1.5 + Math.cos(t) * 2;
+    1.5 + Math.cos(t * 3) * 2;
 
+  // 上下移動
   sphere.position.y =
-    Math.sin(t * 2) * 1.5;
+    Math.sin(t * 4) * 1.5;
 
   // --------------------
   // Light
   // --------------------
 
   light.position.x =
-    Math.sin(t) * 5;
+    Math.sin(t * 2) * 8;
 
   light.position.z =
-    Math.cos(t) * 5;
+    Math.cos(t * 2) * 8;
 
-  light.position.y = 3;
+  light.position.y = 4;
 
-  // カメラ
+  // --------------------
+// カメラ回転
+// --------------------
+
+// カメラを大きく回す
+camera.position.x =
+  Math.sin(t) * 10;
+
+camera.position.z =
+  Math.cos(t) * 10;
+
+// 上下も動かす
+camera.position.y =
+  Math.sin(t * 2) * 3;
+
+// 中央を見る
+camera.lookAt(0, 0, 0);
+  // 原点を見る
   camera.lookAt(0, 0, 0);
 
   // 描画
